@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zawadi — Fabrik & Family</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@200;300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#100D0A;color:#F5EFE0;font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+
+.swatch{display:flex;height:6px;width:100%;position:fixed;top:0;left:0;z-index:200;}
+.swatch span{flex:1;}
+
+nav{position:fixed;top:6px;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4rem;background:linear-gradient(to bottom,rgba(16,13,10,0.97),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,239,224,0.6);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.4);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover{color:#D4973B;}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 4rem 5rem;background:radial-gradient(ellipse at 65% 35%,rgba(194,96,58,0.2) 0%,transparent 55%),radial-gradient(ellipse at 15% 75%,rgba(43,58,107,0.3) 0%,transparent 50%),#0A0806;}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:#C2603A;margin-bottom:1.5rem;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7.5rem);font-weight:300;line-height:0.92;margin-bottom:2rem;}
+.hero h1 em{font-style:italic;color:#D4973B;}
+.hero-line{width:40px;height:1px;background:#C2603A;margin-bottom:1.5rem;}
+.hero-sub{font-size:1rem;line-height:1.8;color:rgba(245,239,224,0.7);max-width:500px;margin-bottom:2.5rem;}
+.hero-scroll{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,239,224,0.3);}
+
+section{padding:6rem 4rem;}
+
+.panels-intro{margin-bottom:4rem;}
+.panels-intro h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;}
+.panels-intro p{font-size:0.78rem;letter-spacing:0.1em;color:rgba(245,239,224,0.4);margin-top:0.6rem;}
+
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:5rem;}
+.panel.flip{direction:rtl;}
+.panel.flip>*{direction:ltr;}
+
+.panel-frame{border:1px solid rgba(212,151,59,0.25);padding:8px;background:#0A0806;position:relative;}
+.img-slot{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;}
+.img-slot .placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;transition:opacity 0.3s;}
+.img-slot:hover .placeholder{opacity:0.7;}
+.placeholder-num{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,239,224,0.35);position:absolute;top:1rem;left:1rem;}
+.placeholder-icon{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-style:italic;color:rgba(245,239,224,0.12);}
+.placeholder-cta{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(194,96,58,0.6);border:1px solid rgba(194,96,58,0.3);padding:0.5rem 1rem;}
+.img-slot input[type=file]{display:none;}
+.pv1{background:linear-gradient(155deg,#1a1228,#2B3A6B 45%,#C2603A 75%,#D4973B);}
+.pv3{background:linear-gradient(135deg,#100D0A,#1e1208 50%,#C2603A 80%,#D4973B);}
+.pv6{background:linear-gradient(155deg,#C2603A,#D4973B 45%,#2C4A3E 80%,#1a0d06);}
+
+.panel-label{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:#C2603A;margin-bottom:0.9rem;}
+.panel-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,2.5vw,2.5rem);font-weight:300;line-height:1.15;margin-bottom:1.2rem;}
+.panel-rule{width:30px;height:1px;background:#C2603A;margin-bottom:1.2rem;}
+.panel-body{font-size:0.88rem;line-height:1.95;color:rgba(245,239,224,0.68);max-width:400px;}
+.panel-caption{margin-top:1.4rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:#D4973B;line-height:1.6;}
+
+/* MORE PANELS TEASER */
+.panels-teaser{
+  border:1px solid rgba(212,151,59,0.15);
+  padding:3rem;
+  text-align:center;
+  margin-top:1rem;
+  background:linear-gradient(135deg,rgba(194,96,58,0.05),rgba(43,58,107,0.08));
+}
+.teaser-label{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:#C2603A;margin-bottom:1rem;}
+.teaser-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:300;font-style:italic;color:var(--cream);margin-bottom:0.8rem;color:#F5EFE0;}
+.teaser-sub{font-size:0.8rem;color:rgba(245,239,224,0.4);margin-bottom:2rem;line-height:1.7;}
+.btn-p{display:inline-block;padding:0.9rem 2.4rem;background:#C2603A;color:#F5EFE0;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:background 0.3s;border:none;cursor:pointer;}
+.btn-p:hover{background:#D4973B;}
+
+.pullquote{background:#0A0806;text-align:center;}
+.pq-inner{max-width:680px;margin:0 auto;}
+.pq-label{font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:#C2603A;margin-bottom:2rem;}
+.pq-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:300;font-style:italic;line-height:1.55;color:#F5EFE0;margin-bottom:1.5rem;}
+.pq-attr{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.3);}
+
+.journey h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3vw,2.6rem);font-weight:300;margin-bottom:3.5rem;}
+.nodes{display:flex;position:relative;}
+.nodes::before{content:'';position:absolute;top:18px;left:8px;right:0;height:1px;background:linear-gradient(to right,#C2603A,#D4973B,#2C4A3E,#2B3A6B,#C2603A,rgba(245,239,224,0.2));}
+.node{flex:1;padding-top:2.8rem;padding-right:1rem;position:relative;}
+.ndot{position:absolute;top:10px;left:0;width:16px;height:16px;border-radius:50%;background:#100D0A;border:2px solid #C2603A;}
+.nname{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:#D4973B;margin-bottom:0.4rem;}
+.nrole{font-size:0.78rem;color:rgba(245,239,224,0.65);line-height:1.5;}
+.ndream{font-size:0.72rem;color:rgba(245,239,224,0.35);margin-top:0.5rem;font-style:italic;line-height:1.5;}
+
+.commission h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;margin-bottom:1rem;}
+.commission-sub{font-size:0.88rem;line-height:1.85;color:rgba(245,239,224,0.5);max-width:520px;margin-bottom:3.5rem;}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem;}
+.tier{border:1px solid rgba(245,239,224,0.1);padding:2rem;transition:border-color 0.3s;}
+.tier:hover{border-color:#C2603A;}
+.tier-n{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#C2603A;margin-bottom:0.8rem;}
+.tier-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;margin-bottom:0.4rem;}
+.tier-price{font-size:1.7rem;font-weight:200;color:#D4973B;margin-bottom:1.5rem;}
+.tier ul{list-style:none;}
+.tier li{font-size:0.76rem;color:rgba(245,239,224,0.65);padding:0.4rem 0;border-bottom:1px solid rgba(245,239,224,0.07);line-height:1.5;}
+.tier li:last-child{border:none;}
+.ctas{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.btn-g{display:inline-block;padding:0.9rem 2.4rem;border:1px solid rgba(245,239,224,0.3);color:rgba(245,239,224,0.7);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;}
+.btn-g:hover{border-color:#D4973B;color:#D4973B;}
+
+footer{padding:2.5rem 4rem;border-top:1px solid rgba(245,239,224,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.3);}
+.fcredit{font-size:0.7rem;letter-spacing:0.15em;color:rgba(245,239,224,0.35);font-style:italic;}
+.fcopy{font-size:0.65rem;letter-spacing:0.08em;color:rgba(245,239,224,0.2);}
+hr{border:none;border-top:1px solid rgba(245,239,224,0.07);margin:0 4rem;}
+
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:4rem 1.5rem;}
+  .hero{padding:6rem 1.5rem 4rem;}
+  .panel,.panel.flip{grid-template-columns:1fr;direction:ltr;gap:2rem;}
+  .nodes{flex-direction:column;}
+  .nodes::before{display:none;}
+  .node{padding-top:0;padding-left:2rem;margin-bottom:1.5rem;}
+  .ndot{top:2px;}
+  .tiers{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+  hr{margin:0 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="swatch">
+  <span style="background:#C2603A"></span>
+  <span style="background:#D4973B"></span>
+  <span style="background:#2C4A3E"></span>
+  <span style="background:#2B3A6B"></span>
+  <span style="background:rgba(245,239,224,0.25)"></span>
+</div>
+
+<nav>
+  <div class="logo">Fabrik & Family · InKenya</div>
+  <div class="nav-links">
+    <a href="#panels">The Story</a>
+    <a href="#journey">The Journey</a>
+    <a href="#commission">Commission</a>
+    <a href="mailto:anne@inkenya.org">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">02 · Zawadi · A Story From The Cotton</div>
+  <h1>The Hand<br>That <em>Knew</em><br>First.</h1>
+  <div class="hero-line"></div>
+  <p class="hero-sub">She is nineteen. She is the best cotton picker on this farm. Nobody has told her this officially. Nobody needs to. She has a blue notebook and she is building something. This is not her struggle. This is her strategy, her mastery, her plan, her morning.</p>
+  <div class="hero-scroll">Scroll to enter the rows ↓</div>
+</div>
+
+<section id="panels">
+  <div class="panels-intro">
+    <h2>Three Panels From Zawadi's World</h2>
+    <p>Rift Valley, Kenya &nbsp;·&nbsp; A cotton harvest &nbsp;·&nbsp; A blue notebook &nbsp;·&nbsp; The full length of the world</p>
+  </div>
+
+  <!-- Panel 1 — The Acacia -->
+  <div class="panel">
+    <div class="panel-frame">
+      <div class="img-slot pv1" onclick="this.querySelector('input').click()">
+        <img id="img1" style="display:none">
+        <div class="placeholder">
+          <span class="placeholder-num">01</span>
+          <span class="placeholder-icon">☽</span>
+          <span class="placeholder-cta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img1',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">01 · The Acacia</div>
+      <h3 class="panel-title">Before the rows,<br>there is the tree.</h3>
+      <div class="panel-rule"></div>
+      <p class="panel-body">Three fingers, left hand, bark rough and cool in the dark before dawn. She breathes in once. She knows exactly what she is doing and why. She is telling herself: I am here. I am ready. This day belongs to me.</p>
+      <div class="panel-caption">"Three fingers. Cool bark. The day begins."</div>
+    </div>
+  </div>
+
+  <!-- Panel 2 — The Boll -->
+  <div class="panel flip">
+    <div class="panel-frame">
+      <div class="img-slot pv3" onclick="this.querySelector('input').click()">
+        <img id="img2" style="display:none">
+        <div class="placeholder">
+          <span class="placeholder-num">04</span>
+          <span class="placeholder-icon">✦</span>
+          <span class="placeholder-cta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img2',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">04 · The Boll</div>
+      <h3 class="panel-title">One extra second.<br>Her hands knew first.</h3>
+      <div class="panel-rule"></div>
+      <p class="panel-body">Round. Dense. Perfectly ready. It is not softness. It is not weight. It is something more like will. The fibre has done everything it was put here to do. It is ready to become what it was always going to become.</p>
+      <div class="panel-caption">"Not yet. Too early. This one. Wait. This one."</div>
+    </div>
+  </div>
+
+  <!-- Panel 3 — Wema -->
+  <div class="panel">
+    <div class="panel-frame">
+      <div class="img-slot pv6" onclick="this.querySelector('input').click()">
+        <img id="img3" style="display:none">
+        <div class="placeholder">
+          <span class="placeholder-num">10</span>
+          <span class="placeholder-icon">○</span>
+          <span class="placeholder-cta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img3',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">10 · Wema</div>
+      <h3 class="panel-title">She does not know its name.<br>She only knows how it feels.</h3>
+      <div class="panel-rule"></div>
+      <p class="panel-body">Eight months later. A city Zawadi has never visited. A woman stands before a mirror in a terracotta dress and feels something she cannot name — a kind of being held, a kind of rightness, a kind of coming home to herself. She does not know that this feeling has a history.</p>
+      <div class="panel-caption">"Between them, the whole length of the world."</div>
+    </div>
+  </div>
+
+  <!-- TEASER -->
+  <div class="panels-teaser">
+    <div class="teaser-label">A Preview · 3 of 6 Panels</div>
+    <div class="teaser-text">There is more world to enter.</div>
+    <p class="teaser-sub">Amina's hands. The blue notebook. The shop with the sign in the window.<br>The full deck is available on request.</p>
+    <a href="mailto:anne@inkenya.org" class="btn-p">Request the Full Deck</a>
+  </div>
+
+</section>
+
+<section class="pullquote">
+  <div class="pq-inner">
+    <div class="pq-label">From the story</div>
+    <div class="pq-text">"Zawadi is one of 28 million people who grow and harvest the cotton in your wardrobe. This is not her struggle. This is her strategy, her mastery, her plan, her morning."</div>
+    <div class="pq-attr">Fabrik & Family · InKenya · 2026</div>
+  </div>
+</section>
+
+<hr>
+
+<section class="journey" id="journey">
+  <h2>The Boll She Held for One Extra Second</h2>
+  <div class="nodes">
+    <div class="node">
+      <div class="ndot"></div>
+      <div class="nname">Zawadi</div>
+      <div class="nrole">Cotton picker. Rift Valley.</div>
+      <div class="ndream">Her shop will sell fabric grown in soil she knows by name.</div>
+    </div>
+    <div class="node">
+      <div class="ndot" style="border-color:#D4973B"></div>
+      <div class="nname">Chidi</div>
+      <div class="nrole">Weighmaster.</div>
+      <div class="ndream">His daughter starts secondary school next term.</div>
+    </div>
+    <div class="node">
+      <div class="ndot" style="border-color:#2C4A3E"></div>
+      <div class="nname">Abena</div>
+      <div class="nrole">Quality supervisor. The ginnery.</div>
+      <div class="ndream">She has answers to questions the industry hasn't written yet.</div>
+    </div>
+    <div class="node">
+      <div class="ndot" style="border-color:#2B3A6B"></div>
+      <div class="nname">Omar</div>
+      <div class="nrole">Spinner. 30 years.</div>
+      <div class="ndream">The house has been under construction eleven years. This batch adds a room.</div>
+    </div>
+    <div class="node">
+      <div class="ndot" style="border-color:#D4973B"></div>
+      <div class="nname">Mama Ife</div>
+      <div class="nrole">Tailor. Nairobi. 40 years.</div>
+      <div class="ndream">She cuts with the confidence of someone for whom doubt is a waste of a good blade.</div>
+    </div>
+    <div class="node">
+      <div class="ndot" style="border-color:rgba(245,239,224,0.3)"></div>
+      <div class="nname">Wema</div>
+      <div class="nrole">Nairobi. The morning.</div>
+      <div class="ndream">She does not know that this feeling has a history.</div>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="commission" id="commission">
+  <h2>Commission Zawadi.</h2>
+  <p class="commission-sub">Three angles. Five stories. One global campaign. Whether your mandate is farmer livelihoods, supply chain transparency, or the end consumer — one of the three angles is already written for you.</p>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-n">Tier One</div>
+      <div class="tier-name">The Digital Narrative</div>
+      <div class="tier-price">$7,500</div>
+      <ul>
+        <li>Full licence · all 6 Zawadi panels</li>
+        <li>Up to 4 additional panels to your brief</li>
+        <li>60-sec parallax motion edit</li>
+        <li>Instagram, LinkedIn, TikTok</li>
+        <li>Narrative adapted to your voice</li>
+        <li>Delivery · 3 to 4 weeks</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-n">Tier Two</div>
+      <div class="tier-name">The Hero Film</div>
+      <div class="tier-price">$18,500</div>
+      <ul>
+        <li>Cinematic 90-sec animated short</li>
+        <li>Voiceover, sound design, music</li>
+        <li>Premiere at your flagship event</li>
+        <li>Your focus area at script stage</li>
+        <li>Full licence · 24 months</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-n">Tier Three</div>
+      <div class="tier-name">The Global Campaign</div>
+      <div class="tier-price">$50,000</div>
+      <ul>
+        <li>Everything in Tier Two</li>
+        <li>Story told from 3 angles</li>
+        <li>5-part Social Storytelling Kit</li>
+        <li>English + 2 languages of your choice</li>
+        <li>Presenting Sponsor · global reach</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ctas">
+    <a href="mailto:anne@inkenya.org" class="btn-p">Commission This Story</a>
+    <a href="mailto:anne@inkenya.org" class="btn-g">Request the Full Deck</a>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">Fabrik & Family · InKenya</div>
+  <div class="fcredit">Creative direction · Adega Gumbe for InKenya</div>
+  <div class="fcopy">Confidential · Creator IP · All Rights Reserved · anne@inkenya.org</div>
+</footer>
+
+<script>
+function loadImg(input, imgId, slot) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    const ph = slot.querySelector('.placeholder');
+    if (ph) ph.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
+  });
+},{threshold:0.08});
+document.querySelectorAll('.panel,.panels-intro,.panels-teaser,.pq-inner,.journey h2,.nodes,.commission h2,.commission-sub,.tiers,.ctas').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(20px)';
+  el.style.transition='opacity 0.75s ease,transform 0.75s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
