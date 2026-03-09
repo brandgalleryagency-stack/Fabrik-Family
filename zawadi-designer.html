@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zawadi — Fabrik & Family</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@200;300;400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#100D0A;color:#F5EFE0;font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+
+.swatch{display:flex;height:6px;width:100%;position:fixed;top:0;left:0;z-index:200;}
+.swatch span{flex:1;}
+
+nav{position:fixed;top:6px;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4rem;background:linear-gradient(to bottom,rgba(16,13,10,0.97),transparent);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,239,224,0.6);}
+.nav-links{display:flex;gap:2rem;}
+.nav-links a{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.4);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover{color:#D4973B;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 4rem 5rem;background:radial-gradient(ellipse at 65% 35%,rgba(194,96,58,0.2) 0%,transparent 55%),radial-gradient(ellipse at 15% 75%,rgba(43,58,107,0.3) 0%,transparent 50%),#0A0806;}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:#C2603A;margin-bottom:1.5rem;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,8vw,7.5rem);font-weight:300;line-height:0.92;margin-bottom:2rem;}
+.hero h1 em{font-style:italic;color:#D4973B;}
+.hero-line{width:40px;height:1px;background:#C2603A;margin-bottom:1.5rem;}
+.hero-sub{font-size:1rem;line-height:1.8;color:rgba(245,239,224,0.7);max-width:500px;margin-bottom:2.5rem;}
+.hero-scroll{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,239,224,0.3);}
+
+section{padding:6rem 4rem;}
+
+/* PANELS */
+.panels-intro{margin-bottom:4rem;}
+.panels-intro h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:300;}
+.panels-intro p{font-size:0.78rem;letter-spacing:0.1em;color:rgba(245,239,224,0.4);margin-top:0.6rem;}
+
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:5rem;}
+.panel.flip{direction:rtl;}
+.panel.flip>*{direction:ltr;}
+
+.panel-frame{border:1px solid rgba(212,151,59,0.25);padding:8px;background:#0A0806;}
+.img-slot{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.img-slot img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;}
+.placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.8rem;transition:opacity 0.3s;}
+.img-slot:hover .placeholder{opacity:0.7;}
+.pnum{position:absolute;top:1rem;left:1rem;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(245,239,224,0.35);}
+.pglyph{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-style:italic;color:rgba(245,239,224,0.12);}
+.pcta{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(194,96,58,0.6);border:1px solid rgba(194,96,58,0.3);padding:0.5rem 1rem;}
+.img-slot input[type=file]{display:none;}
+
+.pv1{background:linear-gradient(155deg,#1a1208,#D4973B 55%,#C2603A 80%,#2B3A6B);}
+.pv2{background:linear-gradient(175deg,#D4973B,#C2603A 55%,#1a0d06);}
+.pv3{background:linear-gradient(135deg,#100D0A,#1e1208 50%,#C2603A 80%,#D4973B);}
+.pv4{background:linear-gradient(155deg,#1a1228,#2B3A6B 45%,#C2603A 75%,#D4973B);}
+.pv5{background:linear-gradient(155deg,#C2603A,#D4973B 45%,#2C4A3E 80%,#1a0d06);}
+
+.panel-label{font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:#C2603A;margin-bottom:0.9rem;}
+.panel-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,2.5vw,2.5rem);font-weight:300;line-height:1.15;margin-bottom:1.2rem;}
+.panel-rule{width:30px;height:1px;background:#C2603A;margin-bottom:1.2rem;}
+.panel-body{font-size:0.88rem;line-height:2;color:rgba(245,239,224,0.68);max-width:400px;}
+.panel-body p{margin-bottom:0.8rem;}
+.panel-body p:last-child{margin-bottom:0;}
+
+/* THESIS LINE */
+.thesis{
+  padding:6rem 4rem;
+  background:#0A0806;
+  text-align:center;
+  position:relative;
+}
+.thesis::before{
+  content:'';
+  position:absolute;
+  top:0;left:50%;transform:translateX(-50%);
+  width:1px;height:3rem;
+  background:linear-gradient(to bottom,transparent,rgba(212,151,59,0.4));
+}
+.thesis::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:50%;transform:translateX(-50%);
+  width:1px;height:3rem;
+  background:linear-gradient(to top,transparent,rgba(212,151,59,0.4));
+}
+.thesis-inner{max-width:720px;margin:0 auto;}
+.thesis-rule{width:48px;height:1px;background:rgba(212,151,59,0.3);margin:0 auto 2.5rem;}
+.thesis-line{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);
+  font-weight:300;
+  font-style:italic;
+  line-height:1.5;
+  color:#F5EFE0;
+  letter-spacing:0.02em;
+  margin-bottom:2.5rem;
+}
+.thesis-line em{color:#D4973B;font-style:normal;}
+.thesis-rule-bottom{width:48px;height:1px;background:rgba(212,151,59,0.3);margin:0 auto;}
+
+/* COMMISSION */
+.commission h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:300;margin-bottom:1rem;}
+.commission-sub{font-size:0.88rem;line-height:1.85;color:rgba(245,239,224,0.5);max-width:520px;margin-bottom:3.5rem;}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3rem;}
+.tier{border:1px solid rgba(245,239,224,0.1);padding:2rem;transition:border-color 0.3s;}
+.tier:hover{border-color:#C2603A;}
+.tier-n{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:#C2603A;margin-bottom:0.8rem;}
+.tier-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;margin-bottom:0.4rem;}
+.tier-price{font-size:1.7rem;font-weight:200;color:#D4973B;margin-bottom:1.5rem;}
+.tier ul{list-style:none;}
+.tier li{font-size:0.76rem;color:rgba(245,239,224,0.65);padding:0.4rem 0;border-bottom:1px solid rgba(245,239,224,0.07);line-height:1.5;}
+.tier li:last-child{border:none;}
+.ctas{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.btn-p{display:inline-block;padding:0.9rem 2.4rem;background:#C2603A;color:#F5EFE0;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:background 0.3s;}
+.btn-p:hover{background:#D4973B;}
+.btn-g{display:inline-block;padding:0.9rem 2.4rem;border:1px solid rgba(245,239,224,0.3);color:rgba(245,239,224,0.7);font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:all 0.3s;}
+.btn-g:hover{border-color:#D4973B;color:#D4973B;}
+
+footer{padding:2.5rem 4rem;border-top:1px solid rgba(245,239,224,0.08);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,239,224,0.3);}
+.fcredit{font-size:0.7rem;font-style:italic;color:rgba(245,239,224,0.3);}
+.fcopy{font-size:0.65rem;letter-spacing:0.08em;color:rgba(245,239,224,0.2);}
+hr{border:none;border-top:1px solid rgba(245,239,224,0.07);margin:0 4rem;}
+
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:4rem 1.5rem;}
+  .hero{padding:6rem 1.5rem 4rem;}
+  .panel,.panel.flip{grid-template-columns:1fr;direction:ltr;gap:2rem;}
+  .thesis{padding:4rem 1.5rem;}
+  .tiers{grid-template-columns:1fr;}
+  footer{flex-direction:column;text-align:center;padding:2rem 1.5rem;}
+  hr{margin:0 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="swatch">
+  <span style="background:#C2603A"></span>
+  <span style="background:#D4973B"></span>
+  <span style="background:#2C4A3E"></span>
+  <span style="background:#2B3A6B"></span>
+  <span style="background:rgba(245,239,224,0.25)"></span>
+</div>
+
+<nav>
+  <div class="logo">Fabrik & Family · InKenya</div>
+  <div class="nav-links">
+    <a href="#panels">The Story</a>
+    <a href="#commission">Commission</a>
+    <a href="mailto:anne@inkenya.org">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Zawadi · A Story From The Cotton</div>
+  <h1>She has<br>a <em>notebook.</em><br>She has a plan.</h1>
+  <div class="hero-line"></div>
+  <p class="hero-sub">Zawadi is nineteen years old. At night, when the house is quiet, she opens a small blue notebook and writes numbers by the light of a lamp. This is not her struggle. This is her strategy, her mastery, her plan, her morning.</p>
+  <div class="hero-scroll">Scroll to enter her world ↓</div>
+</div>
+
+<!-- PANELS -->
+<section id="panels">
+  <div class="panels-intro">
+    <h2>Five Panels From Zawadi's World</h2>
+    <p>Rift Valley, Kenya &nbsp;·&nbsp; A cotton harvest &nbsp;·&nbsp; A blue notebook &nbsp;·&nbsp; The full length of the world</p>
+  </div>
+
+  <!-- Panel 1 — The Dream -->
+  <div class="panel">
+    <div class="panel-frame">
+      <div class="img-slot pv1" onclick="this.querySelector('input').click()">
+        <img id="img1" style="display:none">
+        <div class="placeholder">
+          <span class="pnum">01</span>
+          <span class="pglyph">▭</span>
+          <span class="pcta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img1',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">01 · The Dream</div>
+      <h3 class="panel-title">At night, when the house<br>is quiet, she writes.</h3>
+      <div class="panel-rule"></div>
+      <div class="panel-body">
+        <p>Zawadi is nineteen. At night, when the house is quiet, she opens a small blue notebook and writes numbers by the light of a lamp.</p>
+        <p>On one page she draws something again and again — the shop she hopes to open one day. A door. A window. Cloth folded in careful stacks.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 2 — The Future -->
+  <div class="panel flip">
+    <div class="panel-frame">
+      <div class="img-slot pv2" onclick="this.querySelector('input').click()">
+        <img id="img2" style="display:none">
+        <div class="placeholder">
+          <span class="pnum">02</span>
+          <span class="pglyph">⊡</span>
+          <span class="pcta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img2',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">02 · The Future</div>
+      <h3 class="panel-title">In her mind<br>the shop is already real.</h3>
+      <div class="panel-rule"></div>
+      <div class="panel-body">
+        <p>Fabric in the window. Light on the floor. A dress on the doorframe.</p>
+        <p>She does not know where the cloth will come from. Only that somewhere far beyond the hills, someone must first grow it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 3 — The Hands That Began It -->
+  <div class="panel">
+    <div class="panel-frame">
+      <div class="img-slot pv3" onclick="this.querySelector('input').click()">
+        <img id="img3" style="display:none">
+        <div class="placeholder">
+          <span class="pnum">03</span>
+          <span class="pglyph">◇</span>
+          <span class="pcta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img3',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">03 · The Hands That Began It</div>
+      <h3 class="panel-title">The hands that taught her<br>belong to her mother.</h3>
+      <div class="panel-rule"></div>
+      <div class="panel-body">
+        <p>For years those hands have moved through the cotton rows, opening the white bolls one by one. Soft fibre gathered gently, so it can travel.</p>
+        <p>Cotton does not stay cotton for long. Soon it will become thread. Then fabric. Then something someone will wear.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 4 — The Beginning of a Garment -->
+  <div class="panel flip">
+    <div class="panel-frame">
+      <div class="img-slot pv4" onclick="this.querySelector('input').click()">
+        <img id="img4" style="display:none">
+        <div class="placeholder">
+          <span class="pnum">04</span>
+          <span class="pglyph">☽</span>
+          <span class="pcta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img4',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">04 · The Beginning of a Garment</div>
+      <h3 class="panel-title">Now Zawadi walks<br>the same rows.</h3>
+      <div class="panel-rule"></div>
+      <div class="panel-body">
+        <p>The cotton is soft and bright in her hands. She does not know where it will go.</p>
+        <p>Only that somewhere far from this field, someone will one day cut it into fabric.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel 5 — The Hidden History -->
+  <div class="panel">
+    <div class="panel-frame">
+      <div class="img-slot pv5" onclick="this.querySelector('input').click()">
+        <img id="img5" style="display:none">
+        <div class="placeholder">
+          <span class="pnum">05</span>
+          <span class="pglyph">○</span>
+          <span class="pcta">Click to load image</span>
+        </div>
+        <input type="file" accept="image/*" onchange="loadImg(this,'img5',this.closest('.img-slot'))">
+      </div>
+    </div>
+    <div>
+      <div class="panel-label">05 · The Hidden History</div>
+      <h3 class="panel-title">Their hands will<br>still be there.</h3>
+      <div class="panel-rule"></div>
+      <div class="panel-body">
+        <p>Somewhere far away, someone will one day wear a garment made from this cotton.</p>
+        <p>She will not know Zawadi. She will not know Amina. But their hands will still be there.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- THESIS LINE -->
+<div class="thesis">
+  <div class="thesis-inner">
+    <div class="thesis-rule"></div>
+    <div class="thesis-line">
+      She does not know that this feeling<br>has a <em>history.</em>
+    </div>
+    <div class="thesis-rule-bottom"></div>
+  </div>
+</div>
+
+<hr>
+
+<!-- COMMISSION -->
+<section class="commission" id="commission">
+  <h2>Commission Zawadi.</h2>
+  <p class="commission-sub">Three angles. Five stories. One global campaign. Whether your mandate is farmer livelihoods, supply chain transparency, or the end consumer — one of the three angles is already written for you.</p>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-n">Tier One</div>
+      <div class="tier-name">The Digital Narrative</div>
+      <div class="tier-price">$7,500</div>
+      <ul>
+        <li>Full licence · all 6 panels</li>
+        <li>Up to 4 additional panels to your brief</li>
+        <li>60-sec parallax motion edit</li>
+        <li>Instagram, LinkedIn, TikTok</li>
+        <li>Narrative adapted to your voice</li>
+        <li>Delivery · 3 to 4 weeks</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-n">Tier Two</div>
+      <div class="tier-name">The Hero Film</div>
+      <div class="tier-price">$18,500</div>
+      <ul>
+        <li>Cinematic 90-sec animated short</li>
+        <li>Voiceover, sound design, music</li>
+        <li>Premiere at your flagship event</li>
+        <li>Your focus area at script stage</li>
+        <li>Full licence · 24 months</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-n">Tier Three</div>
+      <div class="tier-name">The Global Campaign</div>
+      <div class="tier-price">$50,000</div>
+      <ul>
+        <li>Everything in Tier Two</li>
+        <li>Story told from 3 angles</li>
+        <li>5-part Social Storytelling Kit</li>
+        <li>English + 2 languages of your choice</li>
+        <li>Presenting Sponsor · global reach</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ctas">
+    <a href="mailto:anne@inkenya.org" class="btn-p">Commission This Story</a>
+    <a href="mailto:anne@inkenya.org" class="btn-g">Request the Full Deck</a>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">Fabrik & Family · InKenya</div>
+  <div class="fcredit">Creative Direction · Adega Gumbe for InKenya</div>
+  <div class="fcopy">Confidential · Creator IP · All Rights Reserved · anne@inkenya.org</div>
+</footer>
+
+<script>
+function loadImg(input, imgId, slot) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById(imgId);
+    img.src = e.target.result;
+    img.style.display = 'block';
+    const ph = slot.querySelector('.placeholder');
+    if (ph) ph.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
+  });
+},{threshold:0.08});
+document.querySelectorAll('.panel,.panels-intro,.thesis-inner,.commission h2,.commission-sub,.tiers,.ctas').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transition='opacity 0.75s ease,transform 0.75s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
